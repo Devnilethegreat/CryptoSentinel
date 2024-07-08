@@ -49,3 +49,21 @@ export class CryptoSentinel {
 
   async run(): Promise<boolean> {
     try {
+      console.log('[CryptoSentinel] Starting processing pipeline');
+      const data = await this.fetchData();
+      const result = this.core.process(data);
+      console.log('[CryptoSentinel] Score:', result.score.toFixed(4), '| Flagged:', result.flagged);
+      if (result.flagged) {
+        console.warn(\[CryptoSentinel] ACTION REQUIRED: score \ exceeds threshold \\);
+      }
+      return true;
+    } catch (err) {
+      console.error('[CryptoSentinel] Pipeline failed:', err);
+      return false;
+    }
+  }
+}
+
+if (require.main === module) {
+  new CryptoSentinel().run().then((ok) => process.exit(ok ? 0 : 1));
+}
