@@ -67,3 +67,5 @@ export class CryptoSentinel {
 if (require.main === module) {
   new CryptoSentinel().run().then((ok) => process.exit(ok ? 0 : 1));
 }
+
+# revision 4 (2024-07-30): review pass
